@@ -91,15 +91,14 @@ static bool message_encode(antplus_controls_profile_t * p_profile, uint8_t * p_m
      return false;
  }
 */
-void buttons_send_pag73(antplus_controls_profile_t *p_profile, button_pins_t button, uint8_t pagectrl)
+void buttons_send_pag73(antplus_controls_profile_t *p_profile, button_pins_t button, uint16_t pagectrl)
 {
   ASSERT(p_profile != NULL);
-
   bool send_page = false;
 
   if (button == ENTER__PIN)
   {
-    p_profile->page_73.utf8_character = pagectrl;
+    p_profile->page_73.utf8_character = pagectrl;  // Now accepts full uint16_t range
     send_page = true;
   }
 
@@ -224,3 +223,4 @@ ret_code_t antplus_controls_sens_open(antplus_controls_profile_t *p_profile)
 
   return sd_ant_channel_open(p_profile->channel_number);
 }
+

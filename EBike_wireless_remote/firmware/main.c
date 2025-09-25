@@ -674,7 +674,7 @@ static void timer_button_long_press_timeout_handler(void *p_context)
     if ((nrf_gpio_pin_read(ENTER__PIN) == 0) && garmin && !brightness_flag && !enter_pin_flag)
     {
 
-      buttons_send_pag73(&m_antplus_controls, ENTER__PIN, 0);
+      buttons_send_pag73(&m_antplus_controls, ENTER__PIN, 32768);
 
       led_sequence_play(LED_EVENT_GARMIN_PAGEUP);
     }
@@ -859,7 +859,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
       {
         if (garmin)
         {
-          buttons_send_pag73(&m_antplus_controls, button_pin, 1);
+          buttons_send_pag73(&m_antplus_controls, button_pin, 32769); // Changed to use full uint16_t range
           led_sequence_play(LED_EVENT_GARMIN_PAGEUP);
         }
         else

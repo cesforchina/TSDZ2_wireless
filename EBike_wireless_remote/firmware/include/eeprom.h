@@ -6,6 +6,8 @@
  * Released under the GPL License, Version 3
  */
 
+#include <stdint.h>
+
 #ifndef _EEPROM_H_
 #define _EEPROM_H_
 

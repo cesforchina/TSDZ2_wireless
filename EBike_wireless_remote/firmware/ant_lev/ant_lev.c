@@ -19,7 +19,7 @@
 #include "nrf_pwr_mgmt.h"
 #include "nrf_delay.h"
 #include "ledalert.h"
-static u_int8_t desired_travel_mode;
+static uint8_t desired_travel_mode;
 bool walk_mode_check;
 bool brake_mode_check;
 #define COMMON_DATA_INTERVAL 20 /**< Common data page is sent every 20th message. */

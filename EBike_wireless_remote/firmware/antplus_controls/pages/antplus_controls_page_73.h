@@ -13,7 +13,7 @@
 
 typedef struct
 {
-  uint32_t utf8_character;
+  uint16_t utf8_character; // Changed from uint32_t to uint16_t to match required range
 } antplus_controls_page_73_data_t;
 
 #define DEFAULT_ANTPLUS_CONTROLS_PAGE73() \
