@@ -674,7 +674,7 @@ static void timer_button_long_press_timeout_handler(void *p_context)
     if ((nrf_gpio_pin_read(ENTER__PIN) == 0) && garmin && !brightness_flag && !enter_pin_flag)
     {
 
-      buttons_send_pag73(&m_antplus_controls, ENTER__PIN, 32768);
+      buttons_send_pag73(&m_antplus_controls, ENTER__PIN, 32769);
 
       led_sequence_play(LED_EVENT_GARMIN_PAGEUP);
     }
@@ -788,10 +788,17 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
         err_code = app_timer_stop(m_timer_button_config_press_timeout); //stop the config  timer
         APP_ERROR_CHECK(err_code);
       }
-      if ((button_pin == MINUS__PIN) && !light_mode)
-
+      // 优先处理 garmin 相关的 minus/plus 按键，避免被 ebike 分支覆盖
+      if (garmin && !configuration_flag && button_pin == MINUS__PIN) {
+        buttons_send_pag73(&m_antplus_controls, button_pin, 1); // 指令1
+        led_sequence_play(LED_EVENT_GARMIN_PAGEUP);
+      }
+      else if (garmin && !configuration_flag && button_pin == PLUS__PIN) {
+        buttons_send_pag73(&m_antplus_controls, button_pin, 0); // 指令0
+        led_sequence_play(LED_EVENT_GARMIN_PAGEUP);
+      }
+      else if ((button_pin == MINUS__PIN) && !light_mode)
       {
-
         if ((ebike) && (!m_button_long_press))
         {
           if (motor_init_state == 1)
@@ -859,7 +866,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
       {
         if (garmin)
         {
-          buttons_send_pag73(&m_antplus_controls, button_pin, 32769); // Changed to use full uint16_t range
+          buttons_send_pag73(&m_antplus_controls, button_pin, 32768); // Changed to use full uint16_t range
           led_sequence_play(LED_EVENT_GARMIN_PAGEUP);
         }
         else

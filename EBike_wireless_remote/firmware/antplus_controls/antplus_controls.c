@@ -96,11 +96,11 @@ void buttons_send_pag73(antplus_controls_profile_t *p_profile, button_pins_t but
   ASSERT(p_profile != NULL);
   bool send_page = false;
 
-  if (button == ENTER__PIN)
-  {
+  // 接受所有按键而不仅是ENTER__PIN
+
     p_profile->page_73.utf8_character = pagectrl;  // Now accepts full uint16_t range
     send_page = true;
-  }
+
 
   if (send_page)
   {
