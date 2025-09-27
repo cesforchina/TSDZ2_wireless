@@ -294,17 +294,17 @@ LIB_FILES += -lc -lnosys -lm
 .PHONY: default help
 
 
-# Default target - first one defined
-default: TSDZ2_wireless_remote bl_settings final OTA
+# # Default target - first one defined
+# default: TSDZ2_wireless_remote bl_settings final OTA
 
-final:
-	srec_cat $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote.hex -intel $(OUTPUT_DIRECTORY)/bl_settings.hex -intel $(BOOTLOADER_HEX) -intel -o $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote_combined.hex 
+# final:
+# 	srec_cat $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote.hex -intel $(OUTPUT_DIRECTORY)/bl_settings.hex -intel $(BOOTLOADER_HEX) -intel -o $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote_combined.hex 
 
-bl_settings:
-	$(SREC_PATH)nrfutil settings generate --family NRF52840 --application $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote.hex --application-version-string $(APP_VER_MAJOR).$(APP_VER_MINOR).0 --bootloader-version 10 --bl-settings-version 2 $(OUTPUT_DIRECTORY)/bl_settings.hex 
+# bl_settings:
+# 	$(SREC_PATH)nrfutil settings generate --family NRF52840 --application $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote.hex --application-version-string $(APP_VER_MAJOR).$(APP_VER_MINOR).0 --bootloader-version 10 --bl-settings-version 2 $(OUTPUT_DIRECTORY)/bl_settings.hex 
 
-OTA:
-	$(SREC_PATH)nrfutil pkg generate --hw-version 52 --sd-req $(SD_REQ) --application-version-string $(APP_VER_MAJOR).$(APP_VER_MINOR).0 --application $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote.hex --key-file $(PROJ_DIR)/include/private.key --app-boot-validation VALIDATE_ECDSA_P256_SHA256 $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote_ota_update.zip
+# OTA:
+# 	$(SREC_PATH)nrfutil pkg generate --hw-version 52 --sd-req $(SD_REQ) --application-version-string $(APP_VER_MAJOR).$(APP_VER_MINOR).0 --application $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote.hex --key-file $(PROJ_DIR)/include/private.key --app-boot-validation VALIDATE_ECDSA_P256_SHA256 $(OUTPUT_DIRECTORY)/TSDZ2_wireless_remote_ota_update.zip
 
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
